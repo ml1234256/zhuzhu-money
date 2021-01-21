@@ -8,14 +8,14 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
     import Nav from '@/components/Nav.vue';
 
-    export default Vue.extend({
+    export default{
+        name: 'Layout',
         components: {
             Nav
         }
-    })
+    }
 </script>
 <style lang="scss" scoped>
  .nav-wrapper {
@@ -23,7 +23,7 @@
     flex-direction: column;
     height: 100vh;
     > .content {
-        border: 1px solid blue;
+        // border: 1px solid blue;
         flex-grow: 1;
         overflow: auto;
     }

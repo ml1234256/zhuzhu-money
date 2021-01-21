@@ -1,5 +1,5 @@
 <template>
-    <div class="item">
+    <div>
         <layout>
             Labels
         </layout>

@@ -1,5 +1,5 @@
 <template>
-    <div class="item">
+    <div>
         404 Not Found
         <router-link to="/money"> 返回 </router-link>
     </div>

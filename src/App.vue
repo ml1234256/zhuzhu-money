@@ -16,15 +16,17 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+@import "~@/assets/styles/reset.scss";
+@import "~@/assets/styles/helper.scss";
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  font-family: $font-hei;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
  
 </style>

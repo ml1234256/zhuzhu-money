@@ -30,27 +30,26 @@
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/styles/helper.scss";
 nav {
     display: flex;
     flex-direction: row;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-    padding: 4px 0 2px 0;
+    padding: 5px 0 2px 0;
     > .item {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        // border: 1px solid black;
         flex-grow: 1;
         line-height: 1.5;
-        font-size: 14px;
     }
     .icon {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
     > .selected {
-        color: red;
+        color: $color-highlight;
     }
 }
 </style>

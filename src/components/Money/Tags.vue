@@ -1,6 +1,6 @@
 <template>
             <div class="tagBox">
-                <Types />
+
                 <ul class="tagList">
                     <li v-for="tag in dataSource" :key="tag" :class="{selected: selectedTag === tag}" @click="toggle(tag)">{{tag}}</li>
                     <li class="addTag" @click="addTag"> + </li>
@@ -11,24 +11,24 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
-    import Types from '@/components/Money/Types.vue';
+    import { Component, Prop, Watch } from 'vue-property-decorator';
 
-    @Component({
-        components: {Types}
-    })
+    @Component
     export default class Tags extends Vue{
         selectedTag = '';
         @Prop(Array) readonly dataSource: string[] | undefined;
+
         toggle(tag: string) {
             if (this.selectedTag === tag) {
                 this.selectedTag = '';
             } else{
                 this.selectedTag = tag;
             }
+            this.$emit('update:value', this.selectedTag)
         }
         addTag() {
             const tagName = window.prompt('请输入标签名'); 
+            console.log(this.dataSource);
             if(tagName === '' || tagName === null) {
                 return;
             } else if(this.dataSource){

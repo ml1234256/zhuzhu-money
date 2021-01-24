@@ -39,6 +39,8 @@ svg fill
 
 scss
 
+[移动 UI date 控件](https://youzan.github.io/vant-weapp/#/calendar)
+
 
 
 ### JS 与 TS
@@ -96,7 +98,7 @@ TS 组件: class
     
     @Component
 	export default class Types extends Vue {
-    	type = '-'；  // type: string = '-';
+    	type = '-'; // type: string = '-';
     	@Prop(Number) num: number | undefined;
 		selectType(type: string) {
     			if (type !== '-' && type !== '+') {
@@ -110,4 +112,5 @@ TS 组件: class
 
 TS --(编译)--> JS --(运行)--> 浏览器
 
-TS 强类型的 JS
+TS：强类型的 JS
+

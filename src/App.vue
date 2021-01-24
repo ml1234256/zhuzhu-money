@@ -5,16 +5,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import Layout from '@/components/Layout.vue';
-
-Vue.component('Layout', Layout);
-
-export default Vue.extend({
-
-})
-</script>
 <style lang="scss">
 @import "~@/assets/styles/reset.scss";
 @import "~@/assets/styles/helper.scss";

@@ -33,6 +33,81 @@ URL:
 
 <style lang="scss" scoped>
 </style>
-
 插槽 slot
 
+svg fill
+
+scss
+
+
+
+### JS 与 TS
+
+JS 组件
+
+```vue
+<template>
+	<div>
+    	<ul class="types">
+            <li :class="type === '-' && 'selected'" @click="selectType('-')">支出</li>
+            <li :class="type === '+' && 'selected'" @click="selectType('+')">收入</li>
+    	</ul>
+    </div>
+</template>
+
+<scrpt lang="js">
+	export default {
+    	name: 'Types',
+    	data() {
+    		return {
+    			type: '-'
+    		}
+    	},
+    	props: ['num'],
+    	method: {
+    		selectType(type) {
+    			if (type !== '-' && type !== '+') {
+    				throw new Error('type is unknown')
+    			}
+    		this.type = type
+   			 }
+    	}
+    }
+</scrpt>
+```
+
+TS 组件: class
+
+[vue-property-decorator](https://github.com/kaorun343/vue-property-decorator)
+
+```vue
+<template>
+	<div>
+    	<ul class="types">
+            <li :class="type === '-' && 'selected'" @click="selectType('-')">支出</li>
+            <li :class="type === '+' && 'selected'" @click="selectType('+')">收入</li>
+    	</ul>
+    </div>
+</template>
+
+<scrpt lang="ts">
+    import Vue from 'vue';
+    import {Component， Prop} from 'vue-property-decorator';
+    
+    @Component
+	export default class Types extends Vue {
+    	type = '-'；  // type: string = '-';
+    	@Prop(Number) num: number | undefined;
+		selectType(type: string) {
+    			if (type !== '-' && type !== '+') {
+    				throw new Error('type is unknown');
+    			}
+    		this.type = type
+   		}
+    }
+</scrpt>
+```
+
+TS --(编译)--> JS --(运行)--> 浏览器
+
+TS 强类型的 JS

@@ -1,17 +1,19 @@
 <template>
             <div class="outputBox">
-                <div class="date">日期</div>
+                <input  type="date" class="date" name="date">               
                 <input type="text" name="remark" placeholder="输入备注..."/>
-                <div class="output">0.00</div>
+                <div class="output">{{output}}</div>
             </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+    import Vue from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
-    export default Vue.extend({
-        name: 'OutputBox',
-    })
+    @Component
+    export default class OutputBox extends Vue{
+        @Prop(String) output: string | undefined;
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -22,16 +24,20 @@
     display: flex;
     align-items: center;
     > .date {
-        padding:0 5px;
-        margin-right: 5px;
+        // display: block;
+        // padding: 4px;
+        // margin-left: 4px;
+        margin-right: 8px;
+        border: 1px solid $color-border;
+        border-radius: 4px;
     }
     input {
         flex-grow: 1;
-        height: 54px;
+        height: 52px;
         border: none;
     }
     > .output {
-        padding: 0 10px;
+        padding: 0 16px;
         font-size: 24px;
     }
 }

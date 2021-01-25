@@ -35,7 +35,8 @@
                 if(this.dataSource.indexOf(tagName) >= 0) {
                     window.alert('标签已存在');
                 }else{
-                    this.$emit('update:dataSource', [...this.dataSource, tagName]);
+                    this.$emit('update:dataSource', tagName);
+                    // this.$emit('update:dataSource', [...this.dataSource, tagName]);
                 }  
             }
         }

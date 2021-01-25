@@ -2,7 +2,7 @@
     <div>
         <Layout>
             <Types :type.sync="record.type" />
-            <Tags :data-source.sync="currentTags" @update:value="onUpdateTags"/>
+            <Tags :data-source="currentTags" @update:dataSource="onUpdateCurrentTags" @update:value="onUpdateTags"/>
             <Remarks :value.sync="record.remarks" />
             <NumberPad @update:output="onUpdateMount" @submit="saveRecord"/>
             {{record}}
@@ -48,6 +48,14 @@
                 return this.incomeTags;
             }
             return this.expendTags;
+        }
+        set currentTags(value) {
+            this.currentTags = value;
+        }
+
+        onUpdateCurrentTags(value: string) {
+            // console.log(value);
+            this.currentTags.push(value);
         }
 
         onUpdateTags(value: string){

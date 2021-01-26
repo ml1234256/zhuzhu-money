@@ -3,7 +3,9 @@
 
                 <ul class="tagList">
                     <li v-for="tag in dataSource" :key="tag" :class="{selected: selectedTag === tag}" @click="toggle(tag)">{{tag}}</li>
-                    <li class="addTag" @click="addTag"> + </li>
+                    <li class="addTag" @click="addTag"> 
+                        <!-- <router-link to="/labels" class="item" active-class="selected">+</router-link> -->
+                    </li>
                 </ul>
                 <!-- <button class="addTag">新增标签</button> -->
             </div>

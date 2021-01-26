@@ -2,10 +2,12 @@
     <div>
         <Layout>
             <Types :type.sync="record.type" />
-            <Tags :data-source="currentTags" @update:dataSource="onUpdateCurrentTags" @update:value="onUpdateTags"/>
+            <Tags :data-source="currentTagList" @update:dataSource="onUpdateCurrentTagList" @update:value="onUpdateTags"/>
             <Remarks :value.sync="record.remarks" />
             <NumberPad @update:output="onUpdateMount" @submit="saveRecord"/>
         </Layout>
+        支出标签：{{expendTagList}}
+        收入标签：{{incomeTagList}}
          {{record}}
     </div>
 </template>
@@ -18,8 +20,10 @@
     import Remarks from '@/components/Money/Remarks.vue';
     import NumberPad from "@/components/Money/NumberPad.vue";
     import recordListModel from "@/models/recordListModel.ts";
-
+    import tagListModel from "@/models/tagListModel.ts";
+    console.log(111);
     const recordList = recordListModel.fetch();
+    tagListModel.fetch();
 
     @Component({
         components: {  
@@ -27,8 +31,8 @@
         }
     })
     export default class Money extends Vue{
-        expendTags: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗', '其他'];
-        incomeTags: string[] = ['工资', '理财', '兼职', '补助', '其他'];
+        // expendTags: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗', '其他'];
+        // incomeTags: string[] = ['工资', '理财', '兼职', '补助', '其他'];
         recordList: RecordItem[] = recordList;
         record: RecordItem = {
             type: '-', 
@@ -36,19 +40,22 @@
             remarks: '',
             amount: 0.00,
         }
-        get currentTags() {
+        expendTagList = tagListModel.dataExpend;
+        incomeTagList = tagListModel.dataIncome;
+        get currentTagList() {
             if(this.record.type === '+'){
-                return this.incomeTags;
+                return this.incomeTagList;
             }
-            return this.expendTags;
+            return this.expendTagList;
         }
-        set currentTags(value) {
-            this.currentTags = value;
-        }
+        // set currentTagList(value) {
+        //     this.currentTagList = value;
+        // }
 
-        onUpdateCurrentTags(value: string) {
+        onUpdateCurrentTagList(value: string) {
             // console.log(value);
-            this.currentTags.push(value);
+            this.currentTagList.push(value);
+            tagListModel.save();
         }
 
         onUpdateTags(value: string){

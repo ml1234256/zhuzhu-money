@@ -48,7 +48,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 4px 8px;
+    padding: 4px 6px;
     > .tagList {
         display: flex;
         flex-wrap: wrap;
@@ -57,10 +57,10 @@
             border: 1px solid $color-border;
             border-radius: 4px;
             height: 28px;
-            width: 72px;
-            // padding: 12px;
+            width: 76px;
             line-height: 28px;
-            margin: 4px 7px;
+            font-size: 16px;
+            margin: 6px;
             &.selected {
                 background-color: #666;
                 color: #fff;

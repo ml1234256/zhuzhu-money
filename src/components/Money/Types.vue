@@ -31,6 +31,7 @@
         align-items: center;
         font-size:18px;
         height:40px;
+        padding: 0 16px;
         >li {
             border-bottom: 1px solid $color-border;
             width:50%;
@@ -38,9 +39,10 @@
             &.selected::after {
                 content: '';
                 position:absolute;
-                left: 0;
+                left: 50%;
                 bottom:0;
-                width: 100%;
+                transform: translateX(-50%);
+                width: 60%;
                 height: 2px;
                 background-color: #aaa;
             }

@@ -1,6 +1,8 @@
 [视觉设计稿](https://www.figma.com/file/YPtm8nqJlmhsWhfUwln5s7/%E6%97%BA%E8%B4%A2%E8%AE%B0%E8%B4%A6%EF%BC%88%E6%9C%AC%E5%9C%B0%E7%89%88%EF%BC%89-(Copy)?node-id=0%3A1)
 
-### 1. 底部导航栏
+配色：https://colorhunt.co/
+
+ #### 底部导航栏
 
 URL:
 
@@ -113,4 +115,12 @@ TS 组件: class
 TS --(编译)--> JS --(运行)--> 浏览器
 
 TS：强类型的 JS
+
+全局申明类型：将类型申明在 src/custom.d.ts 中，注意命名不能为关键字
+
+抽出函数：src/model.ts
+
+
+
+
 

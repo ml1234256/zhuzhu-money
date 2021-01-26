@@ -5,8 +5,8 @@
             <Tags :data-source="currentTags" @update:dataSource="onUpdateCurrentTags" @update:value="onUpdateTags"/>
             <Remarks :value.sync="record.remarks" />
             <NumberPad @update:output="onUpdateMount" @submit="saveRecord"/>
-            {{record}}
         </Layout>
+         {{record}}
     </div>
 </template>
 
@@ -17,16 +17,9 @@
     import Tags from '@/components/Money/Tags.vue';
     import Remarks from '@/components/Money/Remarks.vue';
     import NumberPad from "@/components/Money/NumberPad.vue";
+    import recordListModel from "@/models/recordListModel.ts";
 
-    const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-    console.log(recordList);
-    type Record = {
-        type: string;
-        selectTag: string;
-        remarks: string;
-        amount: number; // 数据类型 object | string
-        date?: Date;  // '?' 表示可以没有
-    }
+    const recordList = recordListModel.fetch();
 
     @Component({
         components: {  
@@ -36,8 +29,8 @@
     export default class Money extends Vue{
         expendTags: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗', '其他'];
         incomeTags: string[] = ['工资', '理财', '兼职', '补助', '其他'];
-        recordList: Record[] = recordList;
-        record: Record = {
+        recordList: RecordItem[] = recordList;
+        record: RecordItem = {
             type: '-', 
             selectTag: '',
             remarks: '',
@@ -66,10 +59,9 @@
         }
         onUpdateMount(amount: string) {
             this.record.amount = parseFloat(amount);
-            console.log(amount)
         }
         saveRecord() {
-            const recordClone: Record = JSON.parse(JSON.stringify(this.record)); // 拷贝
+            const recordClone: RecordItem = recordListModel.clone(this.record); // 拷贝
             if(recordClone['selectTag'] === ''){
                 window.alert('请选择标签');
                 return;
@@ -80,7 +72,7 @@
         }
         @Watch('recordList')
         onRecordListChanged() {
-            window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+            recordListModel.save(this.recordList);
         }
     }
 </script>

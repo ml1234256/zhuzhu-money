@@ -23,7 +23,6 @@
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    border: 1px solid black;
     > .content {
         // border: 1px solid blue;
         display: flex;

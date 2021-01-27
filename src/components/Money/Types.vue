@@ -28,23 +28,28 @@
 @import "~@/assets/styles/helper.scss";
     .types {
         display: flex;
+        justify-content: center;
         align-items: center;
+        background-color: rgb(0,96,192);
         font-size:18px;
         height:40px;
         padding: 0 16px;
         >li {
-            border-bottom: 1px solid $color-border;
-            width:50%;
+            // border: 1px solid $color-border;
+            color: #fff;
+            width:20%;
             position: relative;
             &.selected::after {
                 content: '';
                 position:absolute;
-                left: 50%;
                 bottom:0;
-                transform: translateX(-50%);
-                width: 60%;
+                left: 0;
+                width: 100%;
+                // left: 50%;
+                // transform: translateX(-50%);
+                // width: 60%;
                 height: 2px;
-                background-color: #aaa;
+                background-color: #fff;
             }
         }
     }

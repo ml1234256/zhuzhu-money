@@ -2,7 +2,7 @@
     <div>
         <Layout>
             <Types :type.sync="record.type" />
-            <Tags :data-source="currentTagList" @update:dataSource="onUpdateCurrentTagList" @update:value="onUpdateTags"/>
+            <Tags :data-source="currentTagList"  @update:value="onUpdateTags"/>
             <Remarks :value.sync="record.remarks" />
             <NumberPad @update:output="onUpdateMount" @submit="saveRecord"/>
         </Layout>
@@ -21,7 +21,7 @@
     import NumberPad from "@/components/Money/NumberPad.vue";
     import recordListModel from "@/models/recordListModel.ts";
     import tagListModel from "@/models/tagListModel.ts";
-    console.log(111);
+
     const recordList = recordListModel.fetch();
     tagListModel.fetch();
 
@@ -31,8 +31,8 @@
         }
     })
     export default class Money extends Vue{
-        // expendTags: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗', '其他'];
-        // incomeTags: string[] = ['工资', '理财', '兼职', '补助', '其他'];
+        // expendTagDefault: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗'];
+        // incomeTagDefault: string[] = ['工资', '理财', '兼职', '补助'];
         recordList: RecordItem[] = recordList;
         record: RecordItem = {
             type: '-', 
@@ -52,11 +52,6 @@
         //     this.currentTagList = value;
         // }
 
-        onUpdateCurrentTagList(value: string) {
-            // console.log(value);
-            this.currentTagList.push(value);
-            tagListModel.save();
-        }
 
         onUpdateTags(value: string){
             this.record.selectTag = value;

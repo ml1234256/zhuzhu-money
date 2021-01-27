@@ -1,17 +1,17 @@
 <template>
     <nav>
       <router-link to="/labels" class="item" active-class="selected">
-      <Icon icon-name="label" />
+      <Icon name="label" />
       标签
       </router-link>
        
       <router-link to="/money" class="item" active-class="selected">
-      <Icon icon-name="money" />
+      <Icon name="money" />
       记账
       </router-link>
       
       <router-link to='/statistics' class="item" active-class="selected">
-      <Icon icon-name="statistics" />
+      <Icon name="statistics" />
       统计
       </router-link>
 
@@ -19,13 +19,8 @@
 </template>
 
 <script lang="ts">
-    import Icon from "@/components/Icon.vue";
     export default {
         name: 'Nav',
-        components: {
-            Icon
-        }
-
     }
 </script>
 

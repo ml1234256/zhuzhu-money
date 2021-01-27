@@ -2,12 +2,14 @@
             <div class="tagBox">
 
                 <ul class="tagList">
-                    <li v-for="tag in dataSource" :key="tag" :class="{selected: selectedTag === tag}" @click="toggle(tag)">{{tag}}</li>
-                    <li class="addTag" @click="addTag"> 
-                        <!-- <router-link to="/labels" class="item" active-class="selected">+</router-link> -->
+                    <li v-for="tag in dataSource" :key="tag.id" :class="{selected: selectedTag === tag.name}" @click="toggle(tag.name)">
+                        {{tag.name}}
+                    </li>
+                    <li class="addTag"> 
+                        <router-link to="/labels" class="edit">全部</router-link>
                     </li>
                 </ul>
-                <!-- <button class="addTag">新增标签</button> -->
+                <!-- <button @click="addTag">新增标签</button> -->
             </div>
 </template>
 
@@ -20,28 +22,16 @@
         selectedTag = '';
         @Prop(Array) readonly dataSource: string[] | undefined;
 
-        toggle(tag: string) {
-            if (this.selectedTag === tag) {
+        toggle(name: string) {
+            console.log('toggle');
+            if (this.selectedTag === name) {
                 this.selectedTag = '';
             } else{
-                this.selectedTag = tag;
+                this.selectedTag = name;
             }
             this.$emit('update:value', this.selectedTag)
         }
-        addTag() {
-            const tagName = window.prompt('请输入标签名'); 
-            console.log(this.dataSource);
-            if(tagName === '' || tagName === null) {
-                return;
-            } else if(this.dataSource){
-                if(this.dataSource.indexOf(tagName) >= 0) {
-                    window.alert('标签已存在');
-                }else{
-                    this.$emit('update:dataSource', tagName);
-                    // this.$emit('update:dataSource', [...this.dataSource, tagName]);
-                }  
-            }
-        }
+
     }
 </script>
 <style lang="scss" scoped>
@@ -67,8 +57,8 @@
                 background-color: #666;
                 color: #fff;
             }
-            &.addTag {
-                font-size: 28px;
+            >.edit {
+                color: #ccc;
             }
         }
     } 

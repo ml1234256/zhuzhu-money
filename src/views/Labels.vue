@@ -21,51 +21,39 @@
     import Vue from 'vue';
     import { Component} from 'vue-property-decorator';
     import Types from '@/components/Money/Types.vue';
-    import tagListModel from "@/models/tagListModel.ts";
-
-    tagListModel.fetch();
 
     @Component({
         components: {Types}
     })
     export default class Labels extends Vue{
         type = '-';
-        expendTagList = tagListModel.dataExpend;
-        incomeTagList = tagListModel.dataIncome;
          get currentTagList() {
             if(this.type === '+'){
-                return this.incomeTagList;
+                return this.$store.state.tagList;
             }
-            return this.expendTagList;
+            return this.$store.state.tagList;
+        }
+        created(){
+            this.$store.commit('fetchTags');
         }
         createTag() {
+            console.log(this.currentTagList);
             const tagName = window.prompt('请输入标签名'); 
             if(tagName === '' || tagName === null) {
                 return;
-            } else {
-                const message = tagListModel.create(tagName);
-                if (message === 'duplicated') {
-                    window.alert('标签已存在');
-                } else {
-                    window.alert('添加成功');
-                }
-            }  
+            }
+            this.$store.commit('createTag', tagName);  
         }
         editTag(id: string) {
             const name = window.prompt('重命名');
              if(name === '' || name === null) {
                 return;
             } else {
-                const message = tagListModel.update(id, name);
-                if (message === 'duplicated') {
-                    window.alert('标签名重复');
-                } else if (message === 'success') {
-                    window.alert('修改成功');
-                }
+               this.$store.commit('updateTag', {id, name});
             }
         }
         removeTag(id: string) {
-            tagListModel.remove(id);
+            this.$store.commit('removeTag', id);
         }
         
     }

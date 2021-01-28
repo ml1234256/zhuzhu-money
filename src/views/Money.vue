@@ -4,7 +4,7 @@
             <Types :type.sync="record.type" />
             <Tags :data-source="currentTagList"  @update:value="onUpdateTags"/>
             <Remarks :value.sync="record.remarks" />
-            <NumberPad @update:output="onUpdateMount" @submit="saveRecord"/>
+            <NumberPad @update:output="onUpdateMount" @submit="createRecord"/>
         </Layout>
         支出标签：{{expendTagList}}
         收入标签：{{incomeTagList}}
@@ -19,11 +19,6 @@
     import Tags from '@/components/Money/Tags.vue';
     import Remarks from '@/components/Money/Remarks.vue';
     import NumberPad from "@/components/Money/NumberPad.vue";
-    import recordListModel from "@/models/recordListModel.ts";
-    import tagListModel from "@/models/tagListModel.ts";
-
-    const recordList = recordListModel.fetch();
-    tagListModel.fetch();
 
     @Component({
         components: {  
@@ -33,25 +28,25 @@
     export default class Money extends Vue{
         // expendTagDefault: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗'];
         // incomeTagDefault: string[] = ['工资', '理财', '兼职', '补助'];
-        recordList: RecordItem[] = recordList;
         record: RecordItem = {
             type: '-', 
             selectTag: '',
             remarks: '',
             amount: 0.00,
         }
-        expendTagList = tagListModel.dataExpend;
-        incomeTagList = tagListModel.dataIncome;
+        get recordList() {
+            return this.$store.state.recordList;
+        }
         get currentTagList() {
             if(this.record.type === '+'){
-                return this.incomeTagList;
+                return this.$store.state.tagList;
             }
-            return this.expendTagList;
+            return this.$store.state.tagList;
         }
-        // set currentTagList(value) {
-        //     this.currentTagList = value;
-        // }
 
+        created(){
+            this.$store.commit('fetchTags');
+        }
 
         onUpdateTags(value: string){
             this.record.selectTag = value;
@@ -62,19 +57,8 @@
         onUpdateMount(amount: string) {
             this.record.amount = parseFloat(amount);
         }
-        saveRecord() {
-            const recordClone: RecordItem = recordListModel.clone(this.record); // 拷贝
-            if(recordClone['selectTag'] === ''){
-                window.alert('请选择标签');
-                return;
-            }
-            recordClone.date = new Date();
-            this.recordList.push(recordClone); 
-            this.record.remarks = '';
-        }
-        @Watch('recordList')
-        onRecordListChanged() {
-            recordListModel.save(this.recordList);
+        createRecord() {
+            this.$store.commit('createRecord', this.record);
         }
     }
 </script>

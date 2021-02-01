@@ -30,7 +30,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgb(0,96,192);
+        background-color: $color-background;
         font-size:18px;
         height:40px;
         padding: 0 16px;

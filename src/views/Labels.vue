@@ -12,7 +12,7 @@
                     
                 </li>
             </ul>
-            <button @click="createTag">新增标签</button>
+            <button class="createTag" @click="createTag">新增标签</button>
         </layout>
     </div>
 </template>
@@ -82,5 +82,14 @@
 .remove {
     font-size: 20px;
     color: #f00;
+}
+.createTag {
+    background: rgb(0, 115, 192);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 15px;
+    margin: 80px auto;
+    padding: 6px 12px;
 }
 </style>

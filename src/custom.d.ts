@@ -6,8 +6,9 @@ type RecordItem = {
     date?: Date;  // '?' 表示可以没有
 }
 type Tag = {
-    id: string;
-    name: string;
+  id: string;
+  type: string;
+  name: string;
 }
 
 type RootState = {

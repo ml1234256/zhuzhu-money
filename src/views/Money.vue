@@ -6,8 +6,6 @@
             <Remarks :value.sync="record.remarks" />
             <NumberPad @update:output="onUpdateMount" @submit="createRecord"/>
         </Layout>
-        支出标签：{{expendTagList}}
-        收入标签：{{incomeTagList}}
          {{record}}
     </div>
 </template>
@@ -39,9 +37,9 @@
         }
         get currentTagList() {
             if(this.record.type === '+'){
-                return this.$store.state.tagList;
+                return this.$store.getters.incomeTagList;
             }
-            return this.$store.state.tagList;
+            return this.$store.getters.expendTagList;
         }
 
         created(){

@@ -12,6 +12,15 @@ const store = new Vuex.Store({
     currentTag: undefined
   } as RootState,
 
+  getters: {
+    expendTagList: state => {
+      return state.tagList.filter(item => item.type === '-');
+    },
+    incomeTagList: state => {
+      return state.tagList.filter(item => item.type === '+');
+    }
+  },
+
   mutations: {
     // recordModel
     fetchRecords(state) {
@@ -34,18 +43,19 @@ const store = new Vuex.Store({
     },
     // tagsModel
     fetchTags(state) {
-      state.tagList = JSON.parse(window.localStorage.getItem('expendTagList') || '[]');
+      state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
     },
     saveTags(state) {
-      window.localStorage.setItem('expendTagList', JSON.stringify(state.tagList));
+      window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
-    createTag(state, name: string) {
-        const names = state.tagList.map(item => item.name);
-        if (names.indexOf(name) >= 0) {
-            window.alert('标签已存在')
+    createTag(state, payload: { name: string; type: string }) {
+      const { name, type } = payload;
+      const names = state.tagList.filter(item => item.type === type).map(item => item.name);
+        if (names.indexOf(payload.name) >= 0) {
+          window.alert('标签已存在');
         } else {
           const id = createId().toString();
-          state.tagList.push({id, name});
+          state.tagList.push({ id, type, name });
           store.commit('saveTags');
           window.alert('添加成功');
         }
@@ -69,16 +79,17 @@ const store = new Vuex.Store({
     updateTag(state, payload: { id: string; name: string }) {
       const { id, name } = payload;
       const idList = state.tagList.map(item => item.id);
-        if (idList.indexOf(id) >= 0) {
-            const names = state.tagList.map(item => item.name);
-            if (names.indexOf(name) >= 0) {
+      if (idList.indexOf(id) >= 0) {
+        const tag = state.tagList.filter(item => item.id === id)[0];
+        const names = state.tagList.filter(item => item.type === tag.type).map(item => item.name);
+        if (names.indexOf(name) >= 0) {
               window.alert('标签名重复');
             } else {
               const tag = state.tagList.filter(item => item.id === id)[0];
               tag.name = name;
               store.commit('saveTags');
               window.alert('修改成功');
-            }
+          }
         } else {
           window.alert('无此标签');
         }

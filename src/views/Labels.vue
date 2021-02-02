@@ -9,7 +9,6 @@
                         <div @click="editTag(tag.id)"><Icon name="edit" /></div>
                         <div class='remove' @click="removeTag(tag.id)"><Icon name="remove" /></div>
                     </div>
-                    
                 </li>
             </ul>
             <button class="createTag" @click="createTag">新增标签</button>
@@ -27,22 +26,22 @@
     })
     export default class Labels extends Vue{
         type = '-';
-         get currentTagList() {
+        get currentTagList() {
             if(this.type === '+'){
-                return this.$store.state.tagList;
+                return this.$store.getters.incomeTagList;
             }
-            return this.$store.state.tagList;
+            return this.$store.getters.expendTagList;
         }
         created(){
             this.$store.commit('fetchTags');
         }
         createTag() {
-            console.log(this.currentTagList);
             const tagName = window.prompt('请输入标签名'); 
             if(tagName === '' || tagName === null) {
                 return;
             }
-            this.$store.commit('createTag', tagName);  
+            const type = this.type;
+            this.$store.commit('createTag', {name:tagName, type});    
         }
         editTag(id: string) {
             const name = window.prompt('重命名');

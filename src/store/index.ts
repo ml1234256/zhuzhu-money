@@ -36,7 +36,7 @@ const store = new Vuex.Store({
           window.alert('请选择标签');
           return;
       }
-      recordClone.date = new Date();
+      // recordClone.date = new Date();
       state.recordList.push(recordClone); 
       store.commit('saveRecords');
       

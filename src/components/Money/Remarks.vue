@@ -1,7 +1,7 @@
 <template>
             <div class="remarkWrapper">
-                <input  type="date" class="date">               
-                <input type="text" :value="value" @input="onInput" placeholder="备注..."/>
+                <input  type="date" class="date" @change="xxx">               
+                <input  type="text" :value="value" @input="onInput" placeholder="备注..."/>
             </div>
 </template>
 
@@ -14,7 +14,11 @@
         @Prop(String) value: string | undefined;
         onInput(event: Event){
             this.$emit('update:value', (event.target as HTMLTextAreaElement).value);
-         }
+        }
+        xxx(event: Event){
+            this.$emit('update:date',(event.target as HTMLTextAreaElement).value);
+        }
+
     }
 </script>
 

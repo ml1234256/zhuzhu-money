@@ -3,7 +3,7 @@ type RecordItem = {
     selectTag: string;
     remarks: string;
     amount: number; // 数据类型 object | string
-    date?: Date;  // '?' 表示可以没有
+    date?: string;  // '?' 表示可以没有
 }
 type Tag = {
   id: string;

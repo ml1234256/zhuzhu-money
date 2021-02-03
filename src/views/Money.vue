@@ -3,10 +3,9 @@
         <Layout>
             <Types :type.sync="record.type" />
             <Tags :data-source="currentTagList"  @update:value="onUpdateTags"/>
-            <Remarks :value.sync="record.remarks" />
+            <Remarks :value.sync="record.remarks" @update:date="onUpdateDate"/>
             <NumberPad @update:output="onUpdateMount" @submit="createRecord"/>
         </Layout>
-         {{record}}
     </div>
 </template>
 
@@ -17,6 +16,7 @@
     import Tags from '@/components/Money/Tags.vue';
     import Remarks from '@/components/Money/Remarks.vue';
     import NumberPad from "@/components/Money/NumberPad.vue";
+    import dayjs from 'dayjs';
 
     @Component({
         components: {  
@@ -48,6 +48,12 @@
 
         onUpdateTags(value: string){
             this.record.selectTag = value;
+        }
+        onUpdateDate(value: string) {
+            this.record.date = value
+            console.log(value);
+            console.log(dayjs(value))
+
         }
         onUpdateRemarks(value: string) {
             this.record.remarks = value;

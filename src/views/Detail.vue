@@ -22,8 +22,8 @@
             <ul class="recordList">
                 <li v-for="(group, index) in groupedList" :key="index">
                     <div class="title">
-                        <span>{{beautify(group.title)}}</span>
-                        <span>￥{{group.total}}</span>
+                        <span>{{beautifyDate(group.title)}}</span>
+                        <span class="total-amount">{{beautifyTotal(group.totalExpend,group.totalIncome)}}</span>
                     </div>
                     <ul>
                         <li v-for="item in group.items" :key="item.id" class="record">
@@ -31,7 +31,7 @@
                                 <span>{{item.selectTag}}</span>
                                 <span class="remark">{{item.remarks}}</span>
                             </div>
-                            <div class="amount">￥{{item.amount}}</div>
+                            <div class="amount">{{item.type + item.amount}}</div>
                         </li>
                     </ul>
                 </li>
@@ -66,7 +66,8 @@
             type Result = {
                 title: string; 
                 items: RecordItem[];
-                total?: number;
+                totalExpend?: number;
+                totalIncome?: number;
             }[];
             const result: Result = [{title: dayjs(newList[0].date).format('YYYY-MM-DD'), items: [newList[0]]}];
             for(let i=1; i<newList.length; i++) {
@@ -79,13 +80,18 @@
                 }
             }
             result.map(group => {
-                group.total = group.items.reduce((sum, item) => {
-                    return sum + item.amount;
+                group.totalExpend = group.items.reduce((sum, item) => {
+                    return item.type === '-' ? sum + item.amount : sum;
+                }, 0); 
+            })
+            result.map(group => {
+                group.totalIncome = group.items.reduce((sum, item) => {
+                    return item.type === '+' ? sum + item.amount : sum;
                 }, 0); 
             })
             return result;
         }
-        beautify(date: string) {
+        beautifyDate(date: string) {
             const day = dayjs(date);
             const now = dayjs();
             const week = {'0':'周日', '1':'周一', '2':'周二', '3': '周三', '4': '周四', '5': '周五', '6': '周六'};
@@ -102,6 +108,21 @@
             }
             return result;
         }
+        beautifyTotal(expend: number, income: number) {
+            let string = '';
+            if (income !== 0) {
+                string = string + '收入：' + income.toString();
+            }
+            if (expend !== 0) {
+                string = string +' 支出：' + expend.toString();
+            }
+          
+            return string;
+        }
+        // beautifyAmount(amount: number, type:string) {
+
+        //     return type + amount;
+        // }
     }
 </script>
 
@@ -130,7 +151,10 @@
         padding: 6px 12px;
         background-color: $color-border;
         font-size: 14px;
-        font-weight: 600;
+        color: #000;
+        >.total-amount {
+            color: #333;
+        }
 }
 .record{
         display: flex;

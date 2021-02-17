@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import dayjs from 'dayjs';
 import createId from '@/lib/createId.ts';
 import clone from '@/lib/clone.ts';
 
@@ -18,7 +19,41 @@ const store = new Vuex.Store({
     },
     incomeTagList: state => {
       return state.tagList.filter(item => item.type === '+');
-    }
+    },
+    groupedList: state => {
+            const {recordList} = state;
+            if (recordList.length === 0) {
+                return [];
+            }
+            const newList = clone(recordList).sort((a: RecordItem, b: RecordItem) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf());
+            type Result = {
+                title: string; 
+                items: RecordItem[];
+                totalExpend?: number;
+                totalIncome?: number;
+            }[];
+            const result: Result = [{title: dayjs(newList[0].date).format('YYYY-MM-DD'), items: [newList[0]]}];
+            for(let i=1; i<newList.length; i++) {
+                const current = newList[i];
+                const last = result[result.length - 1];
+                if(dayjs(last.title).isSame(dayjs(current.date), 'day')) {
+                    last.items.push(current);
+                } else {
+                    result.push({title: dayjs(current.date).format('YYYY-MM-DD'), items: [current]});
+                }
+            }
+            result.map(group => {
+                group.totalExpend = group.items.reduce((sum, item) => {
+                    return item.type === '-' ? sum + item.amount : sum;
+                }, 0); 
+            })
+            result.map(group => {
+                group.totalIncome = group.items.reduce((sum, item) => {
+                    return item.type === '+' ? sum + item.amount : sum;
+                }, 0); 
+            })
+            return result;
+        }
   },
 
   mutations: {
@@ -36,7 +71,6 @@ const store = new Vuex.Store({
           window.alert('请选择标签');
           return;
       }
-      // recordClone.date = new Date();
       state.recordList.push(recordClone); 
       store.commit('saveRecords');
       

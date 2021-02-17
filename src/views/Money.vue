@@ -11,7 +11,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { Component, Watch } from 'vue-property-decorator';
+    import { Component} from 'vue-property-decorator';
     import Types from '@/components/Money/Types.vue';
     import Tags from '@/components/Money/Tags.vue';
     import Remarks from '@/components/Money/Remarks.vue';
@@ -24,8 +24,6 @@
         }
     })
     export default class Money extends Vue{
-        // expendTagDefault: string[] = ['餐饮', '交通', '购物', '服饰鞋包', '学习', '租房', '话费', '医疗'];
-        // incomeTagDefault: string[] = ['工资', '理财', '兼职', '补助'];
         record: RecordItem = {
             type: '-', 
             selectTag: '',

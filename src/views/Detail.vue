@@ -54,42 +54,10 @@
             console.log(this.recordList);
         }
         get recordList() {
-           return (this.$store.state as RootState).recordList;
+            return this.$store.state.recordList;
         }
         get groupedList() {
-            const {recordList} = this;
-            if (recordList.length === 0) {
-                return [];
-            }
-
-            const newList = clone(recordList).sort((a: RecordItem, b: RecordItem) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf());
-            type Result = {
-                title: string; 
-                items: RecordItem[];
-                totalExpend?: number;
-                totalIncome?: number;
-            }[];
-            const result: Result = [{title: dayjs(newList[0].date).format('YYYY-MM-DD'), items: [newList[0]]}];
-            for(let i=1; i<newList.length; i++) {
-                const current = newList[i];
-                const last = result[result.length - 1];
-                if(dayjs(last.title).isSame(dayjs(current.date), 'day')) {
-                    last.items.push(current);
-                } else {
-                    result.push({title: dayjs(current.date).format('YYYY-MM-DD'), items: [current]});
-                }
-            }
-            result.map(group => {
-                group.totalExpend = group.items.reduce((sum, item) => {
-                    return item.type === '-' ? sum + item.amount : sum;
-                }, 0); 
-            })
-            result.map(group => {
-                group.totalIncome = group.items.reduce((sum, item) => {
-                    return item.type === '+' ? sum + item.amount : sum;
-                }, 0); 
-            })
-            return result;
+            return this.$store.getters.groupedList;
         }
         beautifyDate(date: string) {
             const day = dayjs(date);
@@ -149,7 +117,7 @@
         display: flex;
         justify-content: space-between;
         padding: 6px 12px;
-        background-color: $color-border;
+        background-color: rgb(236, 236, 236);
         font-size: 14px;
         color: #000;
         >.total-amount {
@@ -166,6 +134,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: flex-start;
             font-size: 16px;
             padding-bottom: 2px;
             >.remark {

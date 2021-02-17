@@ -54,7 +54,7 @@
             font-size: 16px;
             margin: 6px;
             &.selected {
-                background-color: #666;
+                background-color: #777;
                 color: #fff;
             }
             >.edit {

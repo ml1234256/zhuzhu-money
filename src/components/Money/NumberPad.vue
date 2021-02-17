@@ -111,7 +111,7 @@
         &.ok {
             height: $height-number*2;
             line-height: $height-number*2;
-            background-color: #666;
+            background-color: #777;
             color: #fff;
             float: right;
         }

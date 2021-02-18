@@ -30,7 +30,7 @@
 </script>
 
 <style scoped lang="scss">
-.chart-wrapper {
-    height: 360px;
-}
+// .chart-wrapper {
+//     min-height: 360px;
+// }
 </style>

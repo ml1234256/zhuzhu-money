@@ -26,7 +26,7 @@
                         <span class="total-amount">{{beautifyTotal(group.totalExpend,group.totalIncome)}}</span>
                     </div>
                     <ul>
-                        <li v-for="item in group.items" :key="item.id" class="record">
+                        <li v-for="(item, index) in group.items" :key="index" class="record">
                             <div class="content">
                                 <span>{{item.selectTag}}</span>
                                 <span class="remark">{{item.remarks}}</span>
@@ -44,7 +44,6 @@
 <script lang="ts">
     import Vue from 'vue';
     import Component from 'vue-class-component';
-    import clone from '@/lib/clone';
     import dayjs from 'dayjs';
 
     @Component

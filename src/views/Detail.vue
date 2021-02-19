@@ -2,21 +2,21 @@
     <div>
         <Layout>
             <div class="total">
-                <ul class="date">
+                <!-- <ul class="date">
                     <li>2021年</li>
                     <li>1月</li>
-                </ul>
+                </ul> -->
                 <ul class="income">
                     <li>收入</li>
-                    <li>00</li>
+                    <li>{{totalIncome}}</li>
                 </ul>
                 <ul class="expend">
                     <li>支出</li>
-                    <li>00</li>
+                    <li>{{totalExpend}}</li>
                 </ul>
                 <ul class="balance">
                     <li>结余</li>
-                    <li>00</li>
+                    <li>{{balance}}</li>
                 </ul>
             </div>
             <ul class="recordList">
@@ -50,13 +50,39 @@
     export default class Detail extends Vue{
         beforeCreate(){
             this.$store.commit('fetchRecords');
-            console.log(this.recordList);
         }
         get recordList() {
             return this.$store.state.recordList;
         }
         get groupedList() {
-            return this.$store.getters.groupedList;
+            const groupedList = this.$store.getters.groupedList;
+            const result = [];
+            const today = new Date();
+            for(let i=0; i<groupedList.length; i++){
+                const day = new Date(groupedList[i].title);
+                if(today.valueOf() - day.valueOf() > 86400000 * 31){
+                    break;
+                }
+                result.push(groupedList[i]);
+            }
+            return result;
+        }
+        get totalExpend() {
+            let totalExpend = 0;
+            for(let i=0; i<this.groupedList.length; i++){
+                totalExpend += this.groupedList[i].totalExpend;
+            }
+            return totalExpend;
+        }
+        get totalIncome() {
+            let totalIncome = 0;
+            for(let i=0; i<this.groupedList.length; i++){
+                totalIncome += this.groupedList[i].totalIncome;
+             }
+            return totalIncome;
+        }
+        get balance() {
+            return this.totalIncome - this.totalExpend;
         }
         beautifyDate(date: string) {
             const day = dayjs(date);
@@ -139,7 +165,7 @@
             >.remark {
             text-align: left;
             color: #ccc;
-            font-size: 10px;
+            font-size: 12px;
             }
         }
         >.amount {

@@ -49,9 +49,6 @@
         }
         onUpdateDate(value: string) {
             this.record.date = value
-            console.log(value);
-            console.log(dayjs(value))
-
         }
         onUpdateRemarks(value: string) {
             this.record.remarks = value;

@@ -23,7 +23,6 @@
         @Prop(Array) readonly dataSource: string[] | undefined;
 
         toggle(name: string) {
-            console.log('toggle');
             if (this.selectedTag === name) {
                 this.selectedTag = '';
             } else{

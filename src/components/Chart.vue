@@ -1,5 +1,5 @@
 <template>
-    <div class="chart-wrapper" ref="chartWrapper">
+    <div ref="chartWrapper">
     </div>
 </template>
 
@@ -30,7 +30,5 @@
 </script>
 
 <style scoped lang="scss">
-// .chart-wrapper {
-//     min-height: 360px;
-// }
+
 </style>

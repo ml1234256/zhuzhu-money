@@ -1,6 +1,6 @@
 <template>
             <div class="remarkWrapper">
-                <input  type="date" class="date" @change="xxx">               
+                <input  type="date" class="date" @change="onChange">               
                 <input  type="text" :value="value" @input="onInput" placeholder="备注..."/>
             </div>
 </template>
@@ -12,10 +12,13 @@
     @Component
     export default class Remarks extends Vue{
         @Prop(String) value: string | undefined;
+        mounted() {
+            (document.querySelector('.date') as HTMLElement).valueAsDate = new Date();
+        }
         onInput(event: Event){
             this.$emit('update:value', (event.target as HTMLTextAreaElement).value);
         }
-        xxx(event: Event){
+        onChange(event: Event){
             this.$emit('update:date',(event.target as HTMLTextAreaElement).value);
         }
 

@@ -18,10 +18,5 @@
   line-height: 1.5;
   color: #333;
 }
-// @media (min-width: 500px) {
-//   #app {
-//     width: 375px;
-//     height: 667px;
-//   }
-// } 
+
 </style>

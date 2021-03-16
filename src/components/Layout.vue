@@ -23,8 +23,13 @@
     flex-direction: column;
     height: 100vh;
     width: 100vw;
+    @media (min-width: 500px) {
+        width: 375px;
+        height: 667px;
+        border: 1px solid #d9d9d9;
+        margin: 20px auto;
+    } 
     > .content {
-        // border: 1px solid blue;
         display: flex;
         flex-direction: column;
         flex-grow: 1;

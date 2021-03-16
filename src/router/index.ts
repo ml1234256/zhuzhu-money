@@ -12,7 +12,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     redirect: './money' // 重定向
-  },
+  }, 
   {
     path: '/money',
     component: Money

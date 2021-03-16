@@ -56,29 +56,25 @@
         }
         get groupedList() {
             const groupedList = this.$store.getters.groupedList;
-            const result = [];
+            const result: any[] = [];
             const today = new Date();
-            for(let i=0; i<groupedList.length; i++){
-                const day = new Date(groupedList[i].title);
-                if(today.valueOf() - day.valueOf() > 86400000 * 31){
-                    break;
+            groupedList.forEach((item: any) => {
+                const day = new Date(item.title);
+                const MONTH = 86400000 * 31;
+                if(today.valueOf() - day.valueOf() <= MONTH){
+                    result.push(item);
                 }
-                result.push(groupedList[i]);
-            }
+            })
             return result;
         }
         get totalExpend() {
             let totalExpend = 0;
-            for(let i=0; i<this.groupedList.length; i++){
-                totalExpend += this.groupedList[i].totalExpend;
-            }
+            this.groupedList.forEach((item: any) => totalExpend += item.totalExpend);
             return totalExpend;
         }
         get totalIncome() {
             let totalIncome = 0;
-            for(let i=0; i<this.groupedList.length; i++){
-                totalIncome += this.groupedList[i].totalIncome;
-             }
+            this.groupedList.forEach((item: any) => totalIncome += item.totalIncome)
             return totalIncome;
         }
         get balance() {
@@ -87,7 +83,7 @@
         beautifyDate(date: string) {
             const day = dayjs(date);
             const now = dayjs();
-            const week = {'0':'周日', '1':'周一', '2':'周二', '3': '周三', '4': '周四', '5': '周五', '6': '周六'};
+            const week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
             let result = '';
             if (day.isSame(now, 'year')) {
                 result =  day.format('M月D日')

@@ -29,7 +29,6 @@
     import Chart from '@/components/Chart.vue';
     import ProgressBar from '@/components/ProgressBar.vue';
     import day from 'dayjs';
-    import dayjs from 'dayjs';
     import _ from 'lodash';
 
     @Component({
@@ -57,29 +56,26 @@
         get leaderList() {
             const tags: Tag[] = this.type === '-' ? this.$store.getters.expendTagList : this.$store.getters.incomeTagList;
             const recordList= this.recordList.filter((item: RecordItem) => item.type === this.type);
-            let array = [];
-            for (let i = 0; i<tags.length; i++) {
-                array.push({tag: tags[i].name, total: 0, percent: '0'})
-            }
+            let array: any[] = [];
+            tags.forEach((item: any) => array.push({tag: item.name, total: 0, percent: '0'}));
             const today = new Date();
-            for(let i = 0; i< recordList.length; i++) {
-                const day = new Date(recordList[i].date);
-                if (today.valueOf() - day.valueOf() < 86400000 * 31) {
-                    for (let j = 0; j<array.length; j++){
-                        if(recordList[i].selectTag === array[j].tag){
-                        array[j].total += recordList[i].amount;
+            recordList.forEach((item: any) => {
+                const day = new Date(item.date);
+                const MONTH = 86400000 * 31;
+                if(today.valueOf() - day.valueOf() < MONTH) {
+                    array.forEach((arrItem: any) => {
+                        if(item.selectTag === arrItem.tag) {
+                            arrItem.total += item.amount;
                         }
-                    }
+                    })
                 }
-            }
+            })
             array = array.sort((a, b) => b.total - a.total);
             return array;
         }
         get totalMount() {
             let mount = 0;
-            for (let i = 0; i< this.leaderList.length; i++) {
-                mount += this.leaderList[i].total;
-            }
+            this.leaderList.forEach(item => mount += item.total)
             return mount
         }
         get keyValueList(){
